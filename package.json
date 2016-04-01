@@ -11,7 +11,12 @@
   "keywords":[
     "fly",
     "fly-plugin",
-    "zip"
+    "zip",
+    "archive",
+    "archiver",
+    "compress",
+    "compression",
+    "file"
   ],
   "scripts": {
     "test": "xo && npm run tape",
