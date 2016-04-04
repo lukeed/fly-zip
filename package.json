@@ -30,6 +30,8 @@
     "url": "https://lukeed.com"
   },
   "dependencies": {
+    "concat-stream": "^1.5.1",
+    "object-assign": "^4.0.1",
     "yazl": "^2.3.0"
   },
   "devDependencies": {
