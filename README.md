@@ -11,22 +11,58 @@
 [![][dl-badge]][npm-pkg-link]
 [![][travis-badge]][travis-link]
 
-## Usage
-> Check out the [documentation](PLUGIN_DOCUMENTATION) to see the available options.
-
-### Install
+## Install
 
 ```a
 npm install -D fly-zip
 ```
 
-### Example
+## Example
+
+Produces a ZIP at `./archives/Archive.zip` with all contents inside `dist/`, including empty directories.
 
 ```js
-export default function* () {
-  yield ...
-}
+exports.zip = function * () {
+  yield this.source('dist/**/*')
+    .zip({
+      base: 'dist',
+      destination: 'archives',
+      filename: 'Archive.zip',
+    })
+};
 ```
+
+## API
+
+#### base
+
+> Type: `String`. <br>
+**Recommended**
+
+The base directory from which all sources are found. This string is stripped from the final contents' filepaths.
+
+For example, compressing `dist/**/*` without specifying `base: 'dist'` will produce a new `dist/` directory when extracted.
+
+#### compress
+
+> Type: `Boolean`<br>
+> Default: `true`
+
+If the ZIP file should compress its contents.
+
+#### destination
+
+> Type: `String`<br>
+> Default: `'.'`
+
+The name of the directory to write to. Defaults to the current root directory.
+
+#### filename
+
+> Type: `String`<br>
+> Default: `'archive.zip'`
+
+The name of your ZIP file. The `filename` must include `.zip`.
 
 ## License
 
