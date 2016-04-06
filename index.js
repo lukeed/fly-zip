@@ -1,9 +1,9 @@
 var path = require('path');
 var yazl = require('yazl');
 var stat = require('fs').statSync;
-var write = require('fs').writeFile;
 var assign = require('object-assign');
 var concat = require('concat-stream');
+var writer = require('safe-write-file');
 
 module.exports = function () {
 	var opts;
@@ -14,7 +14,7 @@ module.exports = function () {
 		opts = opts || assign({
 			base: '',
 			compress: true,
-			destination: this.root,
+			destination: '.',
 			filename: 'archive.zip'
 		}, options || {});
 
@@ -23,7 +23,7 @@ module.exports = function () {
 		}).then(function () {
 			zip.end(function () {
 				zip.outputStream.pipe(concat(function (data) {
-					return write(path.join(opts.destination, opts.filename), data, catcher);
+					return writer(path.join(self.root, opts.destination, opts.filename), data, catcher);
 				}));
 			});
 		});
