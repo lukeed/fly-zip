@@ -1,12 +1,12 @@
 'use strict';
 
-const p = require('path');
+const {format, relative, resolve} = require('path');
 const JSZip = require('jszip');
 
-module.exports = function () {
+module.exports = function (fly) {
 	const zip = new JSZip();
 
-	this.plugin('zip', {every: 0}, function * (files, opts) {
+	fly.plugin('zip', {every: 0}, function * (files, opts) {
 		opts = Object.assign({
 			dest: '.',
 			name: 'archive.zip'
@@ -14,12 +14,12 @@ module.exports = function () {
 
 		for (const file of files) {
 			if (file.data) {
-				zip.file(p.relative(this.root, p.format(file)), file.data, {base64: 1});
+				zip.file(relative(this.root, format(file)), file.data, {base64: 1});
 			}
 		}
 
 		const out = yield zip.generateAsync({type: 'nodebuffer'});
 
-		yield this.$.write(p.resolve(opts.dest, opts.name), out);
+		yield this.$.write(resolve(opts.dest, opts.name), out);
 	});
 };
