@@ -13,8 +13,8 @@ npm install --save-dev fly-zip
 This will produces a ZIP at `releases/Archive.zip`, containing all contents within the `dist` directory.
 
 ```js
-exports.zip = function * () {
-  yield this.source('dist/**/*').zip({
+exports.zip = function * (fly) {
+  yield fly.source('dist/**/*').zip({
     dest: 'releases',
     file: 'Archive.zip'
   });
